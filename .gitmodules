@@ -1,0 +1,15 @@
+[submodule "CLI-RPG-IO"]
+	path = CLI-RPG-IO
+	url = git@github.com:CLI-RPG/CLI-RPG-IO.git
+[submodule "CLI-RPG-Authentication"]
+	path = CLI-RPG-Authentication
+	url = git@github.com:CLI-RPG/CLI-RPG-Authentication.git
+[submodule "CLI-RPG-Business-Logic"]
+	path = CLI-RPG-Business-Logic
+	url = git@github.com:CLI-RPG/CLI-RPG-Business-Logic.git
+[submodule "CLI-RPG-Logging"]
+	path = CLI-RPG-Logging
+	url = git@github.com:CLI-RPG/CLI-RPG-Logging.git
+[submodule "CLI-RPG-Frontend"]
+	path = CLI-RPG-Frontend
+	url = git@github.com:CLI-RPG/CLI-RPG-Frontend.git
