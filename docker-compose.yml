@@ -1,0 +1,108 @@
+version: '3.1'
+
+services:
+
+  mongo-auth:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    env_file:
+        secret.env
+    volumes:
+      - mongo-db-auth:/data/db
+    networks:
+      - mongo_auth_db
+      - mongo_auth_adapter
+      - mongo_auth_gui
+
+  mongo-express-auth:
+    depends_on:
+      - mongo
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    env_file:
+        secret.env
+    networks:
+      - mongo_auth_db
+
+  auth_server:
+    depends_on:
+      - mongo
+    image: auth_server
+    ports:
+      - 5000:5000
+    restart: always
+    build: ./auth
+    env_file:
+      secret.env
+    networks:
+      - mongo_auth_adapter
+
+  pirate_grafana:
+    depends_on:
+      - mongo
+    build:
+      context: ./CLI-RPG-Authentication/grafana-mongodb-docker
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./data:/var/lib/grafana
+      - /var/lib/grafana/plugins
+    ports:
+      - 3000:3000
+    networks:
+      - mongo_auth_gui
+
+  bl_service:
+    image: bl_service
+    ports:
+      - 5002:5000
+    restart: always
+    build: ./CLI-RPG-Business-Logic
+    env_file:
+      ./CLI-RPG-Business-Logic/bl_server.env
+
+  mongo-io:
+    image: mongo
+    restart: always
+    ports:
+      - 20000:27017
+    env_file:
+      ./CLI-RPG-IO/io_db/db.env
+    # networks:
+    #   - cli-rpg-io-mongo
+
+  mongo-express-io:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    env_file:
+      ./CLI-RPG-IO/io_db/db.env
+    # networks:
+    #   - cli-rpg-io-mongo
+
+  io_service:
+    depends_on:
+      - mongo
+    image: io_service
+    ports:
+      - 5001:5000
+    restart: always
+    build: ./CLI-RPG-IO/io_service
+    env_file:
+      ./CLI-RPG-IO/io_service/io_service.env
+
+volumes:
+  mongo-db-auth:
+
+networks:
+  mongo_auth_db:
+    name: mongo_auth_db
+  mongo_auth_adapter:
+    name: mongo_auth_adapter
+  mongo_auth_gui:
+    name: mongo_auth_gui
