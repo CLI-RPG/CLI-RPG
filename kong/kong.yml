@@ -1,0 +1,41 @@
+_format_version: "2.1"
+
+services:
+  - name: auth-gui
+    url: http://mongo_express_auth:8081/auth_db/
+    routes:
+      - name: auth-gui-route
+        paths:
+          - /auth_db
+
+  - name: auth-svc
+    url: http://auth_server:5000/
+    routes:
+      - name: auth-route
+        paths:
+          - /auth
+
+  - name: grafana
+    url: http://grafana:3000/
+    routes:
+      - name: grafana-route
+        paths:
+          - /grafana
+
+  - name: bl-gui
+    url: http://mongo_express_bl:8081/db/
+    routes:
+      - name: bl-gui-route
+        paths:
+          - /db
+
+  - name: bl-svc
+    url: http://bl_service:5000/
+    routes:
+      - name: bl-route
+        paths:
+          - /api
+
+
+consumers:
+  - username: test_user
