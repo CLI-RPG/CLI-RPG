@@ -9,7 +9,7 @@ services:
           - /auth_db
 
   - name: auth-svc
-    url: http://auth_server:5000/
+    url: http://auth_server:5000/auth
     routes:
       - name: auth-route
         paths:
@@ -35,6 +35,15 @@ services:
       - name: bl-route
         paths:
           - /api
+
+  - name : frontend
+    url: http://frontend:3000/
+    routes:
+      - name: frontend-routes
+        paths:
+          - /login
+          - /game
+          - /select
 
 
 consumers:
