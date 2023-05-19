@@ -21,6 +21,7 @@ services:
       - name: grafana-route
         paths:
           - /grafana
+        preserve_host : true
 
   - name: bl-gui
     url: http://mongo_express_bl:8081/db/
