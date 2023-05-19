@@ -45,7 +45,3 @@ services:
           - /login
           - /game
           - /select
-
-
-consumers:
-  - username: test_user
