@@ -147,6 +147,7 @@ services:
     working_dir: /home/node/app
     environment:
       - NODE_ENV=production
+      - PORT=8000
     volumes:
       - ./CLI-RPG-Frontend/:/home/node/app
     command: "npm start"
