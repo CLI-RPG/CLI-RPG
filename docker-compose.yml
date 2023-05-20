@@ -140,6 +140,19 @@ services:
       - gateway_bl_db_gui
       - gateway_frontend
 
+  frontend:
+    image: "node:latest"
+    user: "node"
+    restart: always
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./CLI-RPG-Frontend/:/home/node/app
+    command: "npm start"
+    networks:
+      - gateway_frontend
+
 volumes:
   mongo-db-auth:
 
