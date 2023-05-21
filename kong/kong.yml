@@ -43,3 +43,6 @@ services:
       - name: frontend-routes
         paths:
           - /
+
+plugins:
+  - name: prometheus
