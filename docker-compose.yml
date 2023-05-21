@@ -47,12 +47,13 @@ services:
   grafana:
     depends_on:
       - mongo_auth
+      - mongo_bl
     build:
-      context: ./CLI-RPG-Authentication/grafana-mongodb-docker
+      context: ./CLI-RPG-Logging/grafana-mongodb-docker
       dockerfile: Dockerfile
     restart: always
     volumes:
-      - ./CLI-RPG-Authentication/data:/var/lib/grafana
+      - ./CLI-RPG-Logging/data:/var/lib/grafana
       - /var/lib/grafana/plugins
     environment:
       GF_SERVER_ROOT_URL : /grafana/
@@ -139,6 +140,16 @@ services:
       - gateway_bl
       - gateway_bl_db_gui
       - gateway_frontend
+
+  prometheus:
+      image: prom/prometheus
+      volumes:
+        - ./prometheus/config.yml:/etc/prometheus/prometheus.yml
+      ports:
+        - 9090:9090
+      networks:
+        - gateway_grafana
+
 
   frontend:
     image: "node:latest"
