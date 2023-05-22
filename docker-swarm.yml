@@ -56,7 +56,7 @@ services:
       - mongo_auth
     image: nethdr/cli-rpg-grafana
     volumes:
-      - ./CLI-RPG-Logging/data:/var/lib/grafana
+      - grafana-data:/var/lib/grafana
       - /var/lib/grafana/plugins
       - ./CLI-RPG-Logging/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
       - ./CLI-RPG-Logging/providers.yaml:/etc/grafana/provisioning/dashboards/providers.yaml
@@ -212,6 +212,7 @@ volumes:
   portainer_data:
   mongo-db-auth:
   mongo-db-bl:
+  grafana-data:
 
 networks:
   agent_network:
