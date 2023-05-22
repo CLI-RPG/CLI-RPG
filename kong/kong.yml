@@ -46,3 +46,35 @@ services:
 
 plugins:
   - name: prometheus
+  - name: cors
+    service: frontend
+    config:
+      origins:
+      - *
+      methods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      headers:
+      - Accept
+      - Accept-Encoding
+      - Accept-Language
+      - Accept-Version
+      - Connection
+      - Content-Length
+      - Content-MD5
+      - Content-Type
+      - DNT
+      - Host
+      - Origin
+      - Referrer
+      - Sec-Fetch-Dest
+      - Sec-Fetch-Mode
+      - Sec-Fetch-Site
+      - Date
+      - x-access-token
+      exposed_headers:
+      - x-access-token
+      credentials: true
+      max_age: 3600
