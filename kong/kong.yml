@@ -50,7 +50,7 @@ plugins:
     service: frontend
     config:
       origins:
-      - *
+      - "*"
       methods:
       - GET
       - POST
