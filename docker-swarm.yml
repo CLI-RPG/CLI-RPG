@@ -77,7 +77,7 @@ services:
           - "node.role==manager"
 
   bl_service:
-    image: nethdr/cli-rpg-bl:1.0.0
+    image: nethdr/cli-rpg-bl
     networks:
       - gateway_bl
       - bl_io_adapter
@@ -162,7 +162,7 @@ services:
           - "node.role==manager"
 
   frontend:
-    image: nethdr/cli-rpg-frontend:1.0.2
+    image: nethdr/cli-rpg-frontend
     user: "node"
     environment:
       - NODE_ENV=production
