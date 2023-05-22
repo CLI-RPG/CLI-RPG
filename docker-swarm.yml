@@ -15,9 +15,9 @@ services:
       - auth_db_grafana
     deploy:
       replicas : 1
-      # placement:
-      #   constraints:
-      #     - "node.role==auth_db"
+      placement:
+        constraints:
+          - "node.role==manager"
 
 
 
@@ -74,9 +74,9 @@ services:
       - bl_db_grafana
     deploy:
       replicas : 1
-      # placement:
-      #   constraints:
-      #     - "node.role==grafana"
+      placement:
+        constraints:
+          - "node.role==manager"
 
   bl_service:
     image: nethdr/cli-rpg-bl:1.0.0
@@ -99,9 +99,9 @@ services:
       - mongo-db-bl:/data/db
     deploy:
       replicas : 1
-      # placement:
-      #   constraints:
-      #     - "node.role==bl_db"
+      placement:
+        constraints:
+          - "node.role==manager"
 
   mongo_express_bl:
     image: mongo-express
@@ -181,12 +181,43 @@ services:
     networks:
       - gateway_grafana
 
+  agent:
+    image: portainer/agent:2.11.1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    networks:
+      - agent_network
+    deploy:
+      mode: global
+      placement:
+        constraints: [node.platform.os == linux]
+
+  portainer:
+    image: portainer/portainer-ce:2.11.1
+    command: -H tcp://tasks.agent:9001 --tlsskipverify
+    ports:
+      - "9443:9443"
+      - "9000:9000"
+      - "8002:8000"
+    volumes:
+      - portainer_data:/data
+    networks:
+      - agent_network
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
 
 volumes:
+  portainer_data:
   mongo-db-auth:
   mongo-db-bl:
 
 networks:
+  agent_network:
+    driver: overlay
   gateway_auth_db_gui:
   gateway_auth:
   gateway_grafana:
