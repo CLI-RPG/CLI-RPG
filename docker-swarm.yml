@@ -162,7 +162,7 @@ services:
           - "node.role==manager"
 
   frontend:
-    image: nethdr/cli-rpg-frontend:1.0.1
+    image: nethdr/cli-rpg-frontend:1.0.2
     user: "node"
     environment:
       - NODE_ENV=production
