@@ -40,8 +40,6 @@ services:
     depends_on:
       - mongo_auth
     image: nethdr/cli-rpg-auth
-    env_file:
-      CLI-RPG-Authentication/secret.env
     environment:
       MONGO_AUTH_DATABASE : auth
       MONGO_AUTH_COLLECTION : client
